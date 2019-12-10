@@ -80,3 +80,12 @@ void DeleteRecordsByID()
 	}
 }
 
+void AlphabeticalMatchingStringForNumericColumn()
+{
+	auto data = QBRecordCollectionOperators::PopulateDummyData("testdata", 1000);
+	auto filteredSet = QBRecordCollectionOperators::QBFindMatchingRecords(data, ColumnID::Column0, "testdata500");//String to integer conversion attempted
+																												  //Exception thrown and caught upon failure
+																												  //No record added.
+	assert(filteredSet.size() == (size_t)0);
+}
+
