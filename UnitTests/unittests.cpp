@@ -76,7 +76,6 @@ namespace UnitTests
 		TEST_METHOD(DeleteRecordsByID)
 		{
 			{
-				// populate a bunch of data
 				auto data = QBRecordCollectionOperators::PopulateDummyData("testdata", 1000);
 				auto filteredSet = QBRecordCollectionOperators::QBFindMatchingRecords(data, ColumnID::Column1, "testdata500");
 				Assert::AreEqual(filteredSet.size(), (size_t)1);
@@ -86,5 +85,13 @@ namespace UnitTests
 			}
 		}
 
+		TEST_METHOD(AlphabeticalMatchingStringForNumericColumn)
+		{
+			auto data = QBRecordCollectionOperators::PopulateDummyData("testdata", 1000);
+			auto filteredSet = QBRecordCollectionOperators::QBFindMatchingRecords(data, ColumnID::Column0, "testdata500");//String to integer conversion attempted
+																													      //Exception thrown and caught upon failure
+																														  //No record added.
+			Assert::AreEqual(filteredSet.size(), (size_t)0);
+		}
 	};
 }
