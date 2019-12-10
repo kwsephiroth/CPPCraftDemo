@@ -121,8 +121,9 @@
   <ItemGroup>
     <ClInclude Include="QBBaseImplementation.h" />
     <ClInclude Include="QBDatabaseTypes.h" />
-    <ClInclude Include="QBRecordCollectionHelpers.h" />
+    <ClInclude Include="QBRecordCollectionOperators.h" />
     <ClInclude Include="QBRecordDatabase.h" />
+    <ClInclude Include="UnitTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

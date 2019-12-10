@@ -2,10 +2,20 @@
 #include <string>
 #include <unordered_map>
 
+
+enum class ColumnID
+{
+	Column0,
+	Column1,
+	Column2,
+	Column3
+};
+
 template<typename T>
 struct QBRecordColumn
 {
-	std::string name;
+	//std::string name;
+	ColumnID id;//TODO: Currently this is publicly modifiable. Realistically, we'd want this value to be private, unique, and constant
 	T value;
 };
 
@@ -19,10 +29,14 @@ struct QBRecord
 	QBRecord()
 	{
 		//Set default column names
-		column0.name = "column0";
-		column1.name = "column1";
-		column2.name = "column2";
-		column3.name = "column3";
+		//column0.name = "column0";
+		//column1.name = "column1";
+		//column2.name = "column2";
+		//column3.name = "column3";
+		column0.id = ColumnID::Column0;
+		column1.id = ColumnID::Column1;
+		column2.id = ColumnID::Column2;
+		column3.id = ColumnID::Column3;
 	}
 };
 

@@ -29,10 +29,13 @@
     <ClInclude Include="QBDatabaseTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QBRecordCollectionHelpers.h">
+    <ClInclude Include="QBBaseImplementation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QBBaseImplementation.h">
+    <ClInclude Include="QBRecordCollectionOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

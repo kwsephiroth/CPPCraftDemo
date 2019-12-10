@@ -3,38 +3,52 @@
 #include <iterator>
 #include <algorithm>
 
-class QBRecordCollectionHelpers
+class QBRecordCollectionOperators
 {
 private:
-	QBRecordCollectionHelpers(void);
+	QBRecordCollectionOperators(void);
 
 public:
-	~QBRecordCollectionHelpers(void);
+	~QBRecordCollectionOperators(void);
 
-	static QBRecordCollection QBFindMatchingRecords(const QBRecordCollection& records, const std::string & columnName, const std::string& matchString)
+	static QBRecordCollection QBFindMatchingRecords(const QBRecordCollection& records, /*const std::string & columnName*/const ColumnID columnID, const std::string& matchString)
 	{
 		QBRecordCollection result;
 		
 		std::copy_if(records.begin(), records.end(), std::inserter(result, result.end()), [&](decltype(records.begin())::value_type const& entry) {
 			auto recPtr = entry.second;
-			if (columnName == recPtr->column0.name) {
-				uint32_t matchValue = std::stoul(matchString);//String to unsigned 32 bit integer conversion
-				return matchValue == recPtr->column0.value;
+			if (columnID == recPtr->column0.id) {
+				try
+				{
+					uint32_t matchValue = std::stoul(matchString);//String to unsigned 32 bit integer conversion. Throws exception upon failed conversion!
+					return matchValue == recPtr->column0.value;
+				}
+				catch (...)
+				{
+					return false;
+				}
 			}
-			else if (columnName == recPtr->column1.name) {
+			else if (columnID == recPtr->column1.id) {
 				return recPtr->column1.value.find(matchString) != std::string::npos;
 			}
-			else if (columnName == recPtr->column2.name) {
-				long matchValue = std::stol(matchString);//String to signed 32 bit integer conversion
-				return matchValue == recPtr->column2.value;
+			else if (columnID == recPtr->column2.id) {
+				try
+				{
+					long matchValue = std::stol(matchString);//String to signed 32 bit integer conversion. Throws exception upon failed conversion!
+					return matchValue == recPtr->column2.value;
+				}
+				catch (...)
+				{
+					return false;
+				}
 			}
-			else if (columnName == recPtr->column3.name) {
+			else if (columnID == recPtr->column3.id) {
 				return recPtr->column3.value.find(matchString) != std::string::npos;
 			}
 			else {
 				return false;
 			}
-		});//Copies <uin32_t, shared_ptr<QBRecord>> pair into result whose column contains the string that is being searched for.
+		});//Copies <uin32_t, shared_ptr<QBRecord>> pair into result whose column contains the string value that is being searched for.
 			//Ref counter for shared_ptr will increase by 1.
 		return result;
 	}

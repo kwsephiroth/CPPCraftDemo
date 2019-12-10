@@ -6,7 +6,7 @@
 #include <chrono>
 #include <iostream>
 #include <ratio>
-#include "../CPPCraftDemo/QBRecordCollectionHelpers.h"
+#include "../CPPCraftDemo/QBRecordCollectionOperators.h"
 #include "../CPPCraftDemo/QBRecordDatabase.h"
 #include "../CPPCraftDemo/QBBaseImplementation.h"
 
@@ -31,23 +31,23 @@ namespace UnitTests
 				auto filteredSet = QBBaseFindMatchingRecords(data, "column1", "testdata500");
 				auto filteredSet2 = QBBaseFindMatchingRecords(data, "column2", "24");
 				auto finishTime = steady_clock::now();
-				auto message = ("Base Implementation execution time:	" + std::to_string((double((finishTime - startTime).count()) * steady_clock::period::num / steady_clock::period::den)) + " seconds\n");
+				auto message = ("Base Implementation execution time:		" + std::to_string((double((finishTime - startTime).count()) * steady_clock::period::num / steady_clock::period::den)) + " seconds\n");
 				Logger::WriteMessage(message.c_str());
 
 				// make sure that the function is correct
 				Assert::AreEqual(filteredSet.size(), (size_t)1);
 			}
 
-			//Using QBRecordCollectionHelpers
+			//Using QBRecordCollectionOperators
 			{
 				// populate a bunch of data
-				auto data2 = QBRecordCollectionHelpers::PopulateDummyData("testdata", 1000);
+				auto data = QBRecordCollectionOperators::PopulateDummyData("testdata", 1000);
 				// Find a record that contains and measure the perf
 				auto startTime = steady_clock::now();
-				auto filteredSet = QBRecordCollectionHelpers::QBFindMatchingRecords(data2, "column1", "testdata500");
-				auto filteredSet2 = QBRecordCollectionHelpers::QBFindMatchingRecords(data2, "column2", "24");
+				auto filteredSet = QBRecordCollectionOperators::QBFindMatchingRecords(data, ColumnID::Column1, "testdata500");
+				auto filteredSet2 = QBRecordCollectionOperators::QBFindMatchingRecords(data, ColumnID::Column2, "24");
 				auto finishTime = steady_clock::now();
-				auto message = ("QBRecordCollectionHelpers execution time:	" + std::to_string((double((finishTime - startTime).count()) * steady_clock::period::num / steady_clock::period::den)) + " seconds\n");
+				auto message = ("QBRecordCollectionOperators execution time:	" + std::to_string((double((finishTime - startTime).count()) * steady_clock::period::num / steady_clock::period::den)) + " seconds\n");
 				Logger::WriteMessage(message.c_str());
 
 				// make sure that the function is correct
@@ -62,14 +62,27 @@ namespace UnitTests
 
 				// Find a record that contains and measure the perf
 				auto startTime = steady_clock::now();
-				auto filteredSet = rdb.QBFindMatchingRecords("column1", "testdata500");
-				auto filteredSet2 = rdb.QBFindMatchingRecords("column2", "24");
+				auto filteredSet = rdb.QBFindMatchingRecords(ColumnID::Column1, "testdata500");
+				auto filteredSet2 = rdb.QBFindMatchingRecords(ColumnID::Column2, "24");
 				auto finishTime = steady_clock::now();
-				auto message = ("QBRecordDatabase execution time:		" + std::to_string((double((finishTime - startTime).count()) * steady_clock::period::num / steady_clock::period::den)) + " seconds\n");
+				auto message = ("QBRecordDatabase execution time:			" + std::to_string((double((finishTime - startTime).count()) * steady_clock::period::num / steady_clock::period::den)) + " seconds\n");
 			    Logger::WriteMessage(message.c_str());
 
 				// make sure that the function is correct
 				Assert::AreEqual(filteredSet.size(), (size_t)1);
+			}
+		}
+
+		TEST_METHOD(DeleteRecordsByID)
+		{
+			{
+				// populate a bunch of data
+				auto data = QBRecordCollectionOperators::PopulateDummyData("testdata", 1000);
+				auto filteredSet = QBRecordCollectionOperators::QBFindMatchingRecords(data, ColumnID::Column1, "testdata500");
+				Assert::AreEqual(filteredSet.size(), (size_t)1);
+				QBRecordCollectionOperators::DeleteRecordByID(data, 500);
+				filteredSet = QBRecordCollectionOperators::QBFindMatchingRecords(data, ColumnID::Column1, "testdata500");
+				Assert::AreEqual(filteredSet.size(), (size_t)0);
 			}
 		}
 
