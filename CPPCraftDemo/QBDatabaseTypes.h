@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <unordered_map>
-
+#include <sstream>
 
 enum class ColumnID
 {
@@ -37,6 +37,16 @@ struct QBRecord
 		column1.id = ColumnID::Column1;
 		column2.id = ColumnID::Column2;
 		column3.id = ColumnID::Column3;
+	}
+
+	std::string to_string()
+	{
+		std::stringstream ss;
+		ss << "Column0 : " << column0.value << "\n";
+		ss << "Column1 : " << column1.value << "\n";
+		ss << "Column2 : " << column2.value << "\n";
+		ss << "Column3 : " << column3.value << "\n";
+		return ss.str();
 	}
 };
 

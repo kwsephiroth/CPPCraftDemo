@@ -1,8 +1,8 @@
 #pragma once
-#include <iostream>
 #include <iterator>
 #include <algorithm>
 #include "QBDatabaseTypes.h"
+#include "QBLogger.h"
 
 class QBRecordDatabase
 {
@@ -17,5 +17,6 @@ public:
 	QBRecordCollection QBFindMatchingRecords( /*const std::string & columnName*/ const ColumnID columnID, const std::string& matchString);//Returns a collection subset containing matching records
 	void DeleteRecordByID(uint32_t id);//Deletes record from main record collection using the unique record id
 	size_t size() const { return m_records.size(); }
+	void DeleteAllRecords() { m_records.clear(); }
 };
 

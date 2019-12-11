@@ -1,6 +1,6 @@
 #pragma once
+#include "QBLogger.h"
 #include "QBDatabaseTypes.h"
-#include <iostream>
 #include <iterator>
 #include <algorithm>
 
@@ -31,7 +31,7 @@ public:
 				}
 				catch (std::exception& e)
 				{
-					std::cout << "ERROR: Failed to convert match string /""" << matchString << "/"" to integer : " << e.what() << std::endl;
+					QBLogger::WriteToConsole("ERROR: Failed to convert match string \"" + matchString + "\" to integer : " + e.what());
 					break;
 				}
 			}
@@ -54,7 +54,7 @@ public:
 				}
 				catch (std::exception& e)
 				{
-					std::cout << "ERROR: Failed to convert match string /""" << matchString << "/"" to integer : " << e.what() << std::endl;
+					QBLogger::WriteToConsole("ERROR: Failed to convert match string \"" + matchString + "\" to integer : " + e.what());
 					break;
 				}
 			}

@@ -32,7 +32,7 @@ QBRecordCollection QBRecordDatabase::QBFindMatchingRecords(const ColumnID column
 			}
 			catch (std::exception& e)
 			{
-				std::cout << "ERROR: Failed to convert match string /""" << matchString << "/"" to integer : " << e.what() << std::endl;
+				QBLogger::WriteToConsole("ERROR: Failed to convert match string \"" + matchString + "\" to integer : " + e.what());
 				break;
 			}
 		}
@@ -55,7 +55,7 @@ QBRecordCollection QBRecordDatabase::QBFindMatchingRecords(const ColumnID column
 			}
 			catch (std::exception& e)
 			{
-				std::cout << "ERROR: Failed to convert match string /""" << matchString << "/"" to integer : " << e.what() << std::endl;
+				QBLogger::WriteToConsole("ERROR: Failed to convert match string \"" + matchString + "\" to integer : " + e.what());
 				break;
 			}
 		}
